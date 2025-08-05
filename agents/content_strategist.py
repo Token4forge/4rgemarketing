@@ -4,10 +4,10 @@ import json
 from typing import Dict, List, Any, Optional
 from datetime import datetime, timedelta
 import openai
-from ..core.base_agent import BaseAgent
-from ..core.performance_monitor import PerformanceMonitor
+from core.base_agent import BaseAgent
+from core.performance_monitor import PerformanceMonitor
 
-class ContentStrategistAgent(BaseAgent):
+class ContentStrategistAgent:  # Remove (BaseAgent)
     """
     Content Strategist Agent responsible for creating comprehensive content strategies,
     managing content calendars, and optimizing content performance across all channels.
