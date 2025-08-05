@@ -186,12 +186,7 @@ async def startup_event():
         logger.info("AI Marketing System started successfully")
     except Exception as e:
         logger.error(f"Failed to start system: {e}")
-        try:
-    # Redis connection code here
-    pass
-except Exception as e:
-    print(f"Redis not available: {e}")
-    # Continue without Redis instead of exiting
+       #sys.exit(1)
 
 
 @app.on_event("shutdown")
