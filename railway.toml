@@ -1,0 +1,25 @@
+
+[build]
+builder = "nixpacks"
+
+[deploy]
+startCommand = "python main.py"
+healthcheckPath = "/health"
+healthcheckTimeout = 300
+restartPolicyType = "on_failure"
+restartPolicyMaxRetries = 10
+
+[env]
+PORT = { default = "8000" }
+PYTHONPATH = "."
+PYTHONUNBUFFERED = "1"
+
+[[services]]
+name = "ai-marketing-system"
+
+[services.env]
+DATABASE_URL = { default = "postgresql://marketing_admin:secure_password@localhost:5432/ai_marketing" }
+REDIS_URL = { default = "redis://localhost:6379" }
+OPENAI_API_KEY = { default = "" }
+SECRET_KEY = { default = "your-secret-key-change-in-production" }
+JWT_SECRET = { default = "your-jwt-secret-change-in-production" }
