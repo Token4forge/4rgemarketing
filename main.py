@@ -61,7 +61,7 @@ class AgentManager:
     def __init__(self):
         self.agents = {}
         self.running = False
-        
+    
     async def initialize_agents(self):
         """Initialize all marketing agents"""
         logger.info("Initializing AI Marketing Agents...")
@@ -163,7 +163,7 @@ class AgentManager:
                     health["issues"].append(f"Agent {agent_id}: {agent_health['status']}")
                     if health["status"] == "healthy":
                         health["status"] = "degraded"
-                        
+                
             except Exception as e:
                 health["agents"][agent_id] = {"status": "error", "error": str(e)}
                 health["issues"].append(f"Agent {agent_id}: health check failed")
@@ -210,7 +210,25 @@ async def root():
 
 @app.get("/health")
 async def health_check():
-    """Health check endpoint"""
+    """Simple health check endpoint for Railway"""
+    try:
+        # Simple health check that Railway can use
+        return {
+            "status": "ok",
+            "timestamp": datetime.now().isoformat(),
+            "service": "ai-marketing-system"
+        }
+    except Exception as e:
+        logger.error(f"Health check failed: {e}")
+        return JSONResponse(
+            content={"status": "error", "message": str(e)},
+            status_code=503
+        )
+
+
+@app.get("/health/detailed")
+async def detailed_health_check():
+    """Detailed health check endpoint"""
     health = await agent_manager.health_check()
     status_code = 200 if health["status"] == "healthy" else 503
     return JSONResponse(content=health, status_code=status_code)
@@ -362,7 +380,6 @@ if __name__ == "__main__":
     logger.info("Starting AI Marketing System server...")
     
     # Use Railway's dynamic PORT environment variable
-    if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8000))
     uvicorn.run(
         "main:app",
@@ -370,4 +387,3 @@ if __name__ == "__main__":
         port=port,
         reload=False
     )
-
