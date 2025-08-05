@@ -12,4 +12,4 @@ redis==5.0.1
 tweepy==4.14.0
 kafka-python
 beautifulsoup4==4.12.2
-Add facebook-sdk
+facebook-sdk==3.1.0
