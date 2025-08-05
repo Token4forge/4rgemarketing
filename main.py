@@ -362,13 +362,12 @@ if __name__ == "__main__":
     logger.info("Starting AI Marketing System server...")
     
     # Use Railway's dynamic PORT environment variable
+    if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8000))
-    
     uvicorn.run(
         "main:app",
         host="0.0.0.0",
         port=port,
-        reload=False,
-        log_level=settings.LOG_LEVEL.lower()
+        reload=False
     )
 
